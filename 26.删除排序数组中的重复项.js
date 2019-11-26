@@ -7,14 +7,13 @@
  * @param {number[]} nums
  * @return {number}
  */
-var removeDuplicates = function (nums) {
+var removeDuplicates = function(nums) {
   for (let index = 0; index < nums.length; index += 1) {
     if (index !== nums.length - 1) {
       if (nums[index] === nums[index + 1]) {
-        nums.splice(index, 1)
-        index -= 1
+        nums.splice(index, 1);
+        index -= 1;
       }
     }
   }
 };
-

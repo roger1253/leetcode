@@ -8,9 +8,11 @@
  * @param {number} val
  * @return {number}
  */
-var removeElement = function (nums, val) {
+var removeElement = function(nums, val) {
   while (nums.includes(val)) {
-    nums.splice(nums.findIndex(num => num === val), 1)
+    nums.splice(
+      nums.findIndex(num => num === val),
+      1
+    );
   }
 };
-
