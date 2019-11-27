@@ -12,6 +12,24 @@ var MyLinkedList = function () {
     this.next = null
   }
   this.root = null
+  this.createNewNode = (val) => {
+    return new Node(val)
+  }
+  this.getNode = (index) => {
+    if (this.root === null) {
+      return null
+    }
+    const loop = (node, count) => {
+      if (count === index) {
+        return node
+      }
+      if (node.next === null) {
+        return null
+      }
+      return loop(node.next, count + 1)
+    }
+    return loop(this.root, 0)
+  }
 };
 
 /**
@@ -20,19 +38,11 @@ var MyLinkedList = function () {
  * @return {number}
  */
 MyLinkedList.prototype.get = function (index) {
-  if (this.root === null) {
+  const node = this.getNode(index)
+  if (node === null) {
     return -1
   }
-  const loop = (node, _index) => {
-    if (_index === index) {
-      return node.val
-    }
-    if (node.next === null) {
-      return -1
-    }
-    return loop(node.next, _index + 1)
-  }
-  return loop(this.root, 0)
+  return node.val
 };
 
 /**
@@ -42,9 +52,9 @@ MyLinkedList.prototype.get = function (index) {
  */
 MyLinkedList.prototype.addAtHead = function (val) {
   if (this.root === null) {
-    this.root = new Node(val)
+    this.root = this.createNewNode(val)
   } else {
-    const node = new Node(val)
+    const node = this.createNewNode(val)
     node.next = this.root
     this.root = node
   }
@@ -57,11 +67,11 @@ MyLinkedList.prototype.addAtHead = function (val) {
  */
 MyLinkedList.prototype.addAtTail = function (val) {
   if (this.root === null) {
-    this.root = new Node(val)
+    this.root = this.createNewNode(val)
   } else {
     const loop = (node) => {
       if (node.next === null) {
-        node.next = new Node(val)
+        node.next = this.createNewNode(val)
       } else {
         loop(node.next)
       }
@@ -77,9 +87,31 @@ MyLinkedList.prototype.addAtTail = function (val) {
  * @return {void}
  */
 MyLinkedList.prototype.addAtIndex = function (index, val) {
-  if (this.root !== null) {
-    if (index < 0) {
-      this.addAtHead(val)
+  if (index < 0) {
+    this.addAtHead(val)
+  } else {
+    if (this.root !== null) {
+      if (index === 0) {
+        const node = this.createNewNode(val)
+        node.next = this.root
+        this.root = node
+      } else {
+        const loop = (node, _index) => {
+          if (_index === index - 1) {
+            const temp = this.createNewNode(val)
+            temp.next = node.next
+            node.next = temp
+          }
+          if (node.next !== null) {
+            loop(node.next, _index + 1)
+          }
+        }
+        loop(this.root, 0)
+      }
+    } else {
+      if (index === 0) {
+        this.root = this.createNewNode(val)
+      }
     }
   }
 };
@@ -91,7 +123,25 @@ MyLinkedList.prototype.addAtIndex = function (index, val) {
  */
 MyLinkedList.prototype.deleteAtIndex = function (index) {
   if (this.root !== null) {
-
+    if (index === 0) {
+      if (this.root.next === null) {
+        this.root = null
+      } else {
+        this.root = this.root.next
+      }
+    }
+    const prevNode = this.getNode(index - 1)
+    if (prevNode !== null) {
+      const targetNode = prevNode.next
+      if (targetNode !== null) {
+        const nextNode = targetNode.next
+        if (nextNode !== null) {
+          prevNode.next = nextNode
+        } else {
+          prevNode.next = null
+        }
+      }
+    }
   }
 };
 

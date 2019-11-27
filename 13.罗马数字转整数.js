@@ -9,7 +9,7 @@
  * @param {string} s
  * @return {number}
  */
-var romanToInt = function(s) {
+var romanToInt = function (s) {
   const map = {
     I: 1,
     IV: 4,
@@ -25,18 +25,19 @@ var romanToInt = function(s) {
     CM: 900,
     M: 1000
   };
-  if (s.length === 1) return map[s];
-  const data = s.split('');
-  let result = 0;
+  if (s.length === 1) return map[s]
+  const data = s.split('')
+  let result = 0
   for (let i = 0; i < data.length; i += 1) {
-    const temp = data[i] + data[i + 1];
+    const temp = data[i] + data[i + 1]
     if (map[temp] !== undefined) {
-      result += map[temp];
-      i += 1;
+      result += map[temp]
+      i += 1
     } else {
-      result += map[data[i]];
+      result += map[data[i]]
     }
   }
-  return result;
+  return result
 };
 // @lc code=end
+

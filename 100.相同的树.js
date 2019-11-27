@@ -16,18 +16,18 @@
  * @return {boolean}
  */
 var isSameTree = function (p, q) {
-  const hasEmpty = (...args) => args.includes(null);
-  const handleEmpty = (...args) => args.every(arg => arg === null);
-  if (hasEmpty(p, q)) {
-    return handleEmpty(p, q);
+  if (p === null && q === null) {
+    return true
   }
-  const compare = (a, b) => {
-    if (a.val !== b.val) return false;
-    if (hasEmpty(a.left, b.left, a.right, b.right)) {
-      return handleEmpty(a.left, b.left, a.right, b.right);
-    }
-    return compare(a.left, b.left) && compare(a.right, b.right);
-  };
-  return compare(p, q);
+  if (p === null && q !== null) {
+    return false
+  }
+  if (p !== null && q === null) {
+    return false
+  }
+  if (p.val !== q.val) {
+    return false
+  }
+  return isSameTree(p.left, q.left) && isSameTree(p.right, q.right)
 };
 

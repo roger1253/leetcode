@@ -15,18 +15,15 @@
  * @return {ListNode}
  */
 var deleteDuplicates = function (head) {
-  if (head === null) return head
-  const loop = (node) => {
-    if (node.next !== null) {
-      if (node.val === node.next.val) {
-        node.next = node.next.next
-      }
-      if (node.next !== null) {
-        loop(node.next)
-      }
+  if (head === null) return null
+  let current = head
+  while (current !== null && current.next !== null) {
+    if (current.val === current.next.val) {
+      current.next = current.next.next
+    } else {
+      current = current.next
     }
   }
-  loop(head)
   return head
 };
 
